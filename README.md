@@ -8,3 +8,13 @@ Work in progress. A scheduled pipeline on Databricks Free Edition that collects 
 **Layers:** bronze (raw API responses), silver (parsed, de-duplicated, hourly averages in IST).
 
 **Why cross-check sources:** reports have questioned how reliable Delhi's official monitors are. This project measures station completeness and disagreement between nearby stations instead of assuming any one source is right.
+
+## Data quality findings (work in progress)
+
+Based on about two months of hourly PM2.5 from 64 stations and sensors in the Delhi area, as of 19 Nov 2026.
+
+- **Inventory:** OpenAQ lists 97 stations within 25 km of central Delhi. About a third were not reporting on the day checked, and some stations appear under several IDs, with older feeds that stopped years ago. About 40 stations have two PM2.5 sensors, one of them retired, so picking one sensor per station can silently pick the wrong one.
+- **Update frequency (early 3-day sample):** government "15-minute" feeds often repeat the same value across several slots. About 48% of consecutive 15-minute readings were identical, so the effective resolution at many stations is closer to hourly.
+- **Timestamps:** the OpenAQ archive stamps each reading with the end of its period, while the API gives both start and end. The pipeline aligns the two.
+- **Low-cost sensors and humidity:** relative to the median of the government stations in the same hour, 5 of the 7 low-cost sensors read progressively higher as humidity rises (for example 0.80x under 40% humidity to 1.61x above 80% at one sensor). This is consistent with a humidity effect on low-cost sensors but is not proof, since location and season also vary with humidity.
+- **Co-located stations (early 3-day sample):** two stations listed at the same coordinates in Pusa reported levels 2 to 3 times apart while rising and falling together.
