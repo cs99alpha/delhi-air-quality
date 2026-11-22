@@ -18,3 +18,16 @@ Based on about two months of hourly PM2.5 from 64 stations and sensors in the De
 - **Timestamps:** the OpenAQ archive stamps each reading with the end of its period, while the API gives both start and end. The pipeline aligns the two.
 - **Low-cost sensors and humidity:** relative to the median of the government stations in the same hour, 5 of the 7 low-cost sensors read progressively higher as humidity rises (for example 0.80x under 40% humidity to 1.61x above 80% at one sensor). This is consistent with a humidity effect on low-cost sensors but is not proof, since location and season also vary with humidity.
 - **Co-located stations (early 3-day sample):** two stations listed at the same coordinates in Pusa reported levels 2 to 3 times apart while rising and falling together.
+
+## Forecast (work in progress)
+
+Task: predict PM2.5 six hours ahead at each station, using readings and weather up to now.
+
+Split: train on Nov 2025 to Jan 2026 and Sep to Oct 2026; validate on Feb 2026; held-out check on Nov 1 to 22, 2026. There is a gap in the data from March to mid-September. A 6-hour gap separates train from evaluation periods.
+
+| | Persistence MAE | Model MAE |
+|---|---|---|
+| Validation (Feb 2026) | 55.4 | 38.3 |
+| Held-out (Nov 2026) | 76.3 | 55.1 |
+
+Known limits: the model under-predicts peaks (mean error about -44 on hours above 150 ug/m3). The November check was looked at while the approach was being developed, so it is not a clean test. A clean test will come from data collected after Nov 22, 2026.
