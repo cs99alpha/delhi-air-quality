@@ -18,6 +18,12 @@ Based on about two months of hourly PM2.5 from 64 stations and sensors in the De
 - **Low-cost sensors and humidity:** relative to the median of the government stations in the same hour, 5 of the 7 low-cost sensors read progressively higher as humidity rises (for example 0.80x under 40% humidity to 1.61x above 80% at one sensor). This is consistent with a humidity effect on low-cost sensors but is not proof, since location and season also vary with humidity.
 - **Co-located stations (early 3-day sample):** two stations listed at the same coordinates in Pusa reported levels 2 to 3 times apart while rising and falling together.
 
+### Repeated values
+
+About 75% of consecutive 15-minute readings are identical at CPCB stations (DPCC, UPPCB, HSPCB feeds). That is what a feed publishing one value per hour on a 15-minute grid produces (three of every four slots copy the previous one), so the data is effectively hourly for these stations and the pipeline works at hourly resolution.
+
+Checked for stuck sensors: in hourly averages, no station has more than 5.5% identical consecutive hours (most about 2%), so no stations are excluded. Two stations (Rohini, Jahangirpuri) repeat slightly more at 15-minute level (84% and 80%); not explained yet, with no visible effect on hourly values.
+
 ## Forecast (work in progress)
 
 Task: predict PM2.5 six hours ahead at each station, using readings and weather up to now.
