@@ -1,4 +1,3 @@
-# delhi-air-quality
 # Delhi air quality pipeline
 
 Work in progress. A scheduled pipeline on Databricks Free Edition that collects PM2.5 readings from Delhi-area air quality monitors and checks the sources against each other.
@@ -31,3 +30,19 @@ Split: train on Nov 2025 to Jan 2026 and Sep to Oct 2026; validate on Feb 2026; 
 | Held-out (Nov 2026) | 76.3 | 55.1 |
 
 Known limits: the model under-predicts peaks (mean error about -44 on hours above 150 ug/m3). The November check was looked at while the approach was being developed, so it is not a clean test. A clean test will come from data collected after Nov 22, 2026.
+
+## How it runs
+
+A Databricks job (delhi-air-pm25-refresh) runs every 6 hours with nine tasks:
+
+1. ingest_openaq: last 24 hours of PM2.5 readings from the OpenAQ API into bronze
+2. load_archive: rolling 11-day window from the OpenAQ archive (files appear about 72 hours late), skipping files already loaded
+3. build_silver: parse and deduplicate readings; the archive version wins over the API version
+4. build_silver_hourly: hourly average per sensor
+5. ingest_openmeteo: weather and modelled PM2.5 from Open-Meteo into bronze
+6. build_silver_openmeteo: parse weather into hourly tables
+7. build_gold: join station hours with weather
+8. build_features: lag and weather features with the 6-hour-ahead target (training table)
+9. log_forecasts: frozen model (trained on data before Nov 1, 2026) predicts 6 hours ahead for the newest hours and appends to forecast_log
+
+The frozen model means the logged forecasts form a clean test: nothing in them was seen during training or tuning. They will be scored against the readings that arrive later.
