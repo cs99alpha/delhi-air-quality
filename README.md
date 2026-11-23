@@ -2,7 +2,7 @@
 
 Work in progress. A scheduled pipeline on Databricks Free Edition that collects PM2.5 readings from Delhi-area air quality monitors and checks the sources against each other.
 
-**Sources:** OpenAQ, which carries government monitors (CPCB/DPCC), a US government feed and low-cost sensors. Planned: Open-Meteo weather and modelled air quality.
+**Sources:** OpenAQ (which carries government monitors (CPCB/DPCC)), a US government feed and low-cost sensors. Planned: Open-Meteo weather and modelled air quality.
 
 **Layers:** bronze (raw API responses), silver (parsed, de-duplicated, hourly averages in IST).
 
