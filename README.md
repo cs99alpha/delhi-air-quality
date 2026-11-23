@@ -51,4 +51,4 @@ A Databricks job (delhi-air-pm25-refresh) runs every 6 hours with nine tasks:
 8. build_features: lag and weather features with the 6-hour-ahead target (training table)
 9. log_forecasts: frozen model (trained on data before Nov 1, 2026) predicts 6 hours ahead for the newest hours and appends to forecast_log
 
-The frozen model means the logged forecasts form a clean test: nothing in them was seen during training or tuning. They will be scored against the readings that arrive later.
+The frozen model means the logged forecasts form a clean test: nothing in them was seen during training or tuning. They will be scored against the readings that arrive later in time.
