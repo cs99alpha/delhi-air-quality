@@ -36,8 +36,8 @@ Split: train on Nov 2025 to Jan 2026 and Sep to Oct 2026; validate on Feb 2026; 
 
 | | Persistence MAE | Model MAE |
 |---|---|---|
-| Validation (Feb 2026) | 55.4 | 38.3 |
-| Held-out (Nov 2026) | 76.3 | 55.1 |
+| Validation (Feb 2026) | 50.7 | 35.2 |
+| Held-out (Nov 2026) | 74.5 | 53.6 |
 
 Known limits: the model under-predicts peaks (mean error about -44 on hours above 150 ug/m3). The November check was looked at while the approach was being developed, so it is not a clean test. A clean test will come from data collected after Nov 22, 2026.
 
