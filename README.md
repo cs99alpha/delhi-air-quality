@@ -24,6 +24,10 @@ About 75% of consecutive 15-minute readings are identical at CPCB stations (DPCC
 
 Checked for stuck sensors: in hourly averages, no station has more than 5.5% identical consecutive hours (most about 2%), so no stations are excluded. Two stations (Rohini, Jahangirpuri) repeat slightly more at 15-minute level (84% and 80%); not explained yet, with no visible effect on hourly values.
 
+### Error codes and impossible values
+
+PM2.5 readings below 0, above 1000, or exactly 999.99 are excluded in the silver step. The data held sensor error codes (9999.9, -9999, 999.99), repeated stuck values (1588, 1786, 1496) and readings in the millions at one Gurugram station. A few hundred rows out of about 730,000, but enough to distort daily averages. Raw data is kept unchanged in bronze. The 1000 limit is a judgement call, not a verified instrument limit.
+
 ## Forecast (work in progress)
 
 Task: predict PM2.5 six hours ahead at each station, using readings and weather up to now.
