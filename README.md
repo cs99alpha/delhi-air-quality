@@ -41,6 +41,8 @@ Split: train on Nov 2025 to Jan 2026 and Sep to Oct 2026; validate on Feb 2026; 
 
 Known limits: the model under-predicts peaks (mean error about -44 on hours above 150 ug/m3). The November check was looked at while the approach was being developed, so it is not a clean test. A clean test will come from data collected after Nov 22, 2026.
 
+Forecasts are logged every 6 hours by a frozen model (ml/03_log_forecasts) and scored with ml/04_score_forecasts; first read expected around Dec 6.
+
 ## How it runs
 
 A Databricks job (delhi-air-pm25-refresh) runs every 6 hours with nine tasks:
